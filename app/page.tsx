@@ -1,6 +1,8 @@
 import Navbar from './components/Navbar';
 import NewsSection from './components/NewsSection';
 import MainNewsGrid from './components/MainNewsGrid';
+import BusinessNewsCarousel from './components/BusinessNewsCarousel';
+import PoliticsScienceSection from './components/PoliticsScienceSection';
 
 export default function Home() {
   return (
@@ -8,6 +10,8 @@ export default function Home() {
       <Navbar />
       <NewsSection />
       <MainNewsGrid />
+      <BusinessNewsCarousel />
+      <PoliticsScienceSection />
     </div>
   );
 }
