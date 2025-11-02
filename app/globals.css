@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #0f0f0f;
   --foreground: #171717;
 }
 
@@ -23,4 +23,76 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Hide scrollbar for horizontal navigation */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* Breaking News Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 15s linear infinite;
+}
+
+/* Custom light gray scrollbar for mobile navigation */
+.mobile-nav-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+  transition: scrollbar-color 0.3s ease;
+}
+
+.mobile-nav-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.mobile-nav-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mobile-nav-scroll::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.mobile-nav-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af;
+}
+
+/* Hide scrollbar after scroll */
+.mobile-nav-scroll.scrollbar-hidden {
+  scrollbar-color: transparent transparent;
+}
+
+.mobile-nav-scroll.scrollbar-hidden::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
