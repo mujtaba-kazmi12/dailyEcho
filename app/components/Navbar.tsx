@@ -35,7 +35,7 @@ const Navbar = () => {
 
   return (
     <nav className="text-white w-full" style={{backgroundColor: '#0f0f0f'}}>
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto lg:px-4">
         {/* Top Header with Hamburger Extension */}
         <div className="relative">
           <div className="flex items-center justify-between px-4 py-3 h-16">

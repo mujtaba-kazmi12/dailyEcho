@@ -126,7 +126,7 @@ const NewsSection = () => {
 
                 {/* Top News Article 3 */}
                 <div className="flex space-x-4">
-                  <div className="flex-shrink-0 w-20 h-20 bg-gray-700 rounded overflow-hidden">
+                  <div className="flex-shrink-0 w-20 h-20  bg-gray-700 rounded overflow-hidden">
                     <img 
                       src="/images/pci1.jpg" 
                       alt="News" 
@@ -153,13 +153,28 @@ const NewsSection = () => {
 
         {/* Breaking News Ticker */}
         <div className="mt-8">
-          <div className="text-white flex items-center">
+          {/* Desktop Layout */}
+          <div className="hidden md:flex text-white items-center">
             <span className="py-3 px-4 text-md font-bold uppercase flex-shrink-0" style={{ backgroundColor: '#d61935' }}>
               BREAKING NEWS
             </span>
             <div className="flex-1 py-3 px-4" style={{ backgroundColor: '#333333' }}>
               <div className={`transition-opacity duration-300 ${fadeClass}`}>
-                <span className="text-sm font-bold cursor-pointer" >
+                <span className="text-sm font-bold">
+                  {breakingNews[currentNewsIndex]}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Layout */}
+          <div className="md:hidden text-white">
+            <div className="py-3 px-4 text-md font-bold uppercase" style={{ backgroundColor: '#d61935' }}>
+              BREAKING NEWS
+            </div>
+            <div className="py-3 px-4" style={{ backgroundColor: '#333333' }}>
+              <div className={`transition-opacity duration-300 ${fadeClass}`}>
+                <span className="text-sm font-bold">
                   {breakingNews[currentNewsIndex]}
                 </span>
               </div>
