@@ -28,8 +28,8 @@ const NewsSection = () => {
     return () => clearInterval(interval);
   }, [breakingNews.length]);
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#0f0f0f' }}>
-      <div className="container mx-auto max-w-7xl px-4 py-8">
+    <div className="min-h-fit" style={{ backgroundColor: '#0f0f0f' }}>
+      <div className="container mx-auto max-w-7xl px-4 pt-8 pb-6 md:pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Main Featured Article */}
           <div className="lg:col-span-1">
