@@ -3,19 +3,28 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 
-const Navbar = () => {
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+  description: string;
+  sequence: number;
+}
+
+interface NavbarProps {
+  categories: Category[];
+}
+
+const Navbar = ({ categories }: NavbarProps) => {
   const [activeTab, setActiveTab] = useState('Home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollbarHidden, setScrollbarHidden] = useState(false);
   const mobileNavRef = useRef<HTMLDivElement>(null);
 
+  // Create navigation items: Home + Categories
   const navigationItems = [
-    'Home',
-    'World', 
-    'Politics',
-    'Business',
-    'Sports',
-    'Science'
+    { name: 'Home', slug: '/' },
+    ...categories.map(cat => ({ name: cat.name, slug: `/${cat.slug}` }))
   ];
 
   // Handle scroll to hide scrollbar
@@ -98,23 +107,23 @@ const Navbar = () => {
 
         {/* Navigation Tabs - Connected to hamburger */}
         <div className="hidden md:flex " style={{backgroundColor: '#333333'}}>
-          {navigationItems.map((item, index) => (
+          {navigationItems.map((item) => (
             <Link
-              key={item}
-              href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+              key={item.slug}
+              href={item.slug}
               className={`px-6 py-4 text-sm font-bold transition-colors relative ${
-                activeTab === item
+                activeTab === item.name
                   ? 'text-white'
                   : 'text-gray-300 hover:text-white'
               }`}
-              style={activeTab === item ? {
+              style={activeTab === item.name ? {
                 backgroundColor: '#d61935'
               } : {}}
-              onMouseEnter={activeTab !== item ? (e) => (e.target as HTMLElement).style.backgroundColor = '#404040' : undefined}
-              onMouseLeave={activeTab !== item ? (e) => (e.target as HTMLElement).style.backgroundColor = '#333333' : undefined}
-              onClick={() => setActiveTab(item)}
+              onMouseEnter={activeTab !== item.name ? (e) => (e.target as HTMLElement).style.backgroundColor = '#404040' : undefined}
+              onMouseLeave={activeTab !== item.name ? (e) => (e.target as HTMLElement).style.backgroundColor = '#333333' : undefined}
+              onClick={() => setActiveTab(item.name)}
             >
-              {item}
+              {item.name}
             </Link>
           ))}
         </div>
@@ -128,20 +137,20 @@ const Navbar = () => {
             <div className="flex space-x-0 min-w-max px-4">
               {navigationItems.map((item) => (
                 <Link
-                  key={item}
-                  href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                  key={item.slug}
+                  href={item.slug}
                   className={`flex-shrink-0 px-4 py-3 text-sm font-medium transition-colors border-b-2 ${
-                    activeTab === item
+                    activeTab === item.name
                       ? 'text-white border-current'
                       : 'text-gray-300 hover:text-white border-transparent hover:bg-gray-800'
                   }`}
-                  style={activeTab === item ? {
+                  style={activeTab === item.name ? {
                     backgroundColor: '#d61935',
                     borderBottomColor: '#d61935'
                   } : {}}
-                  onClick={() => setActiveTab(item)}
+                  onClick={() => setActiveTab(item.name)}
                 >
-                  {item}
+                  {item.name}
                 </Link>
               ))}
             </div>
