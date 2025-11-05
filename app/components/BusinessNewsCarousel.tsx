@@ -1,98 +1,76 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 
-const BusinessNewsCarousel = () => {
-  const businessNews = [
-    {
-      id: 1,
-      image: "/images/pci1.jpg",
-      title: "Target thinks it can keep growing sales, here's how the retailer will do it",
-      category: "BUSINESS",
-      date: "March 4, 2022",
-      isPremium: true
-    },
-    {
-      id: 2,
-      image: "/images/pci1.jpg",
-      title: "AMC is charging more for 'Batman' tickets as it tests out a new pricing model",
-      category: "BUSINESS",
-      date: "March 4, 2022",
-      isPremium: false
-    },
-    {
-      id: 3,
-      image: "/images/pci1.jpg",
-      title: "Benioff touts Salesforce's sales guidance, '$30 billions are ahead of us'",
-      category: "BUSINESS",
-      date: "March 4, 2022",
-      isPremium: false
-    },
-    {
-      id: 4,
-      image: "/images/pci1.jpg",
-      title: "Meta says today's cellular networks aren't ready for the metaverse",
-      category: "BUSINESS",
-      date: "March 4, 2022",
-      isPremium: false
-    },
-    {
-      id: 5,
-      image: "/images/pci1.jpg",
-      title: "Ford splits EVs into separate units as it boosts electric business",
-      category: "BUSINESS",
-      date: "March 4, 2022",
-      isPremium: true
-    },
-    {
-      id: 6,
-      image: "/images/pci1.jpg",
-      title: "Nordstrom shares soar as it makes 'baby steps', still has a ways to go",
-      category: "BUSINESS",
-      date: "March 4, 2022",
-      isPremium: false
-    }
-  ];
+interface Post {
+  _id: string;
+  postId: string;
+  slug: string;
+  blogContent: {
+    title: string;
+    content?: string;
+    metaDescription?: string;
+  };
+  firebaseImages: Array<{
+    url: string;
+    title?: string;
+    alt?: string;
+  }>;
+  categoryId: string;
+  categorySlug: string;
+  createdAt: string;
+}
 
+interface Category {
+  name: string;
+  slug: string;
+}
+
+interface BusinessNewsCarouselProps {
+  posts: Post[];
+  category: Category | null;
+}
+
+const BusinessNewsCarousel = ({ posts, category }: BusinessNewsCarouselProps) => {
   return (
     <div className="py-8 mx-3" style={{ backgroundColor: '#0f0f0f' }}>
       <div className="container mx-auto max-w-7xl px-4" style={{ backgroundColor: '#333333' }}>
         {/* Header Section */}
         <div className="flex items-center mb-8 pt-8">
           <div className="h-1 flex-1" style={{ backgroundColor: '#d61935' }}></div>
-          <h2 className="text-white text-2xl font-bold mx-6">Business</h2>
+          <h2 className="text-white text-2xl font-bold mx-6">{category?.name || "Business"}</h2>
           <div className="h-1 flex-1" style={{ backgroundColor: '#d61935' }}></div>
         </div> 
 
         {/* News Items Container */}
         <div className="pb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {businessNews.map((article) => (
-              <div key={article.id} className="flex cursor-pointer hover:opacity-80 transition-opacity">
+            {posts.map((article) => (
+              <Link key={article._id} href={`/${article.slug}`} className="flex cursor-pointer hover:opacity-80 transition-opacity group">
                 {/* Image */}
                 <div className="flex-shrink-0 w-24 h-20 relative mr-4">
                   <img 
-                    src={article.image} 
-                    alt={article.title}
+                    src={article.firebaseImages[0]?.url || "/images/pci1.jpg"} 
+                    alt={article.firebaseImages[0]?.alt || article.blogContent.title}
                     className="w-full h-full object-cover"
                   />
-                 
                 </div>
                 
                 {/* Content */}
                 <div className="flex-1">
-                  <h3 className="text-white text-sm font-bold leading-tight mb-2 line-clamp-2 hover:text-gray-300">
-                    {article.title}
+                  <h3 className="text-white text-sm font-bold leading-tight mb-2 line-clamp-2 group-hover:text-gray-300">
+                    {article.blogContent.title}
                   </h3>
                   <div className="flex items-center text-xs text-gray-400">
                     <span className="text-white px-2 py-0.5 text-xs font-bold uppercase mr-2" style={{ backgroundColor: '#d61935' }}>
-                      {article.category}
+                      {article.categorySlug.toUpperCase()}
                     </span>
                     <span className="text-gray-400">|</span>
-                    <span className="ml-2">{article.date}</span>
+                    <span className="ml-2">{new Date(article.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

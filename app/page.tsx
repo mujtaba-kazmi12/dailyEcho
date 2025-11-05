@@ -1,22 +1,22 @@
 import NavbarWrapper from './components/NavbarWrapper';
-import NewsSection from './components/NewsSection';
-import MainNewsGrid from './components/MainNewsGrid';
-import BusinessNewsCarousel from './components/BusinessNewsCarousel';
-import PoliticsScienceSection from './components/PoliticsScienceSection';
-import SportsNewsCarousel from './components/Sprots';
-import LatestNews from './components/LatestNews';
-import Footer from './components/Footer';
+import NewsSectionWrapper from './components/NewsSectionWrapper';
+import MainNewsGridWrapper from './components/MainNewsGridWrapper';
+import BusinessNewsCarouselWrapper from './components/BusinessNewsCarouselWrapper';
+import PoliticsScienceSectionWrapper from './components/PoliticsScienceSectionWrapper';
+import SportsNewsCarouselWrapper from './components/SportsNewsCarouselWrapper';
+import LatestNewsWrapper from './components/LatestNewsWrapper';
+import Footer from './components/FooterWrapper';
 
 export default function Home() {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#0f0f0f' }}>
+    <div className="min-h-screen" style={{ backgroundColor: '#0f0f0f' }} suppressHydrationWarning>
       <NavbarWrapper />
-      <NewsSection />
-      <MainNewsGrid />
-      <BusinessNewsCarousel />
-      <PoliticsScienceSection />
-      <SportsNewsCarousel />
-      <LatestNews />
+      <NewsSectionWrapper />
+      <MainNewsGridWrapper />
+      <BusinessNewsCarouselWrapper />
+      <PoliticsScienceSectionWrapper />
+      <SportsNewsCarouselWrapper />
+      <LatestNewsWrapper currentPage={1} />
       <Footer />
     </div>
   );

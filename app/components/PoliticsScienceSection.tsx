@@ -1,67 +1,45 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 
-const PoliticsScienceSection = () => {
-  const politicsArticles = [
-    {
-      id: 1,
-      title: "Ramping cut almost in half in last four months, SA government says",
-      category: "POLITICS",
-      date: "March 4, 2022",
-      isPremium: true,
-      hasImage: true,
-      image: "/images/pci1.jpg",
-      excerpt: "It is a daily ritual for millions of Australians, but if you have noticed the price of your morning flat white or soy latte increase, brace yourself — it is likely to get worse. By the end of the year..."
-    },
-    {
-      id: 2,
-      title: "What are the major parties in the lead-up to SA's state election? Tiny living machines called xenobots",
-      category: "POLITICS",
-      date: "March 4, 2022",
-      isPremium: true,
-      hasImage: false
-    },
-    {
-      id: 3,
-      title: "War in Ukraine will not be short, and it's changed everything for Europe, Tiny living machines called xenobots",
-      category: "POLITICS",
-      date: "March 4, 2022",
-      isPremium: false,
-      hasImage: false
-    }
-  ];
+interface Post {
+  _id: string;
+  postId: string;
+  slug: string;
+  blogContent: {
+    title: string;
+    content?: string;
+    metaDescription?: string;
+  };
+  firebaseImages: Array<{
+    url: string;
+    title?: string;
+    alt?: string;
+  }>;
+  categoryId: string;
+  categorySlug: string;
+  createdAt: string;
+}
 
-  const scienceArticles = [
-    {
-      id: 1,
-      title: "'Fresh Banana Leaves' shows how Indigenous people have been harmed",
-      category: "SCIENCE",
-      date: "March 4, 2022",
-      isPremium: true,
-      hasImage: false,
-      excerpt: ""
-    },
-    {
-      id: 2,
-      title: "A fast radio burst's unlikely source may be a cluster of old stars",
-      category: "SCIENCE",
-      date: "March 4, 2022",
-      isPremium: false,
-      hasImage: true,
-      image: "/images/pci1.jpg",
-      excerpt: "It is a daily ritual for millions of Australians, but of your morning flat white or soy latte increase, brace yourself — it is likely to get worse. By the end of the year..."
-    },
-    {
-      id: 3,
-      title: "Tiny living machines called xenobots can create copies of themselves",
-      category: "SCIENCE",
-      date: "March 4, 2022",
-      isPremium: false,
-      hasImage: false,
-      excerpt: "It is a daily ritual for millions of Australians, but if you have noticed the price of your morning flat white or soy latte increase, brace yourself — it is likely to get worse. By the end of the year..."
-    }
-  ];
+interface Category {
+  name: string;
+  slug: string;
+}
+
+interface PoliticsScienceSectionProps {
+  politicsPosts: Post[];
+  sciencePosts: Post[];
+  politicsCategory: Category | null;
+  scienceCategory: Category | null;
+}
+
+const PoliticsScienceSection = ({ politicsPosts, sciencePosts, politicsCategory, scienceCategory }: PoliticsScienceSectionProps) => {
+  // Helper function to extract plain text from HTML
+  const getExcerpt = (htmlContent: string, maxLength: number = 150): string => {
+    const plainText = htmlContent.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+    return plainText.substring(0, maxLength) + (plainText.length > maxLength ? '...' : '');
+  };
 
   const AdBanner = ({ title, subtitle }: { title: string; subtitle: string }) => (
     <div className="p-6 mb-6" style={{ backgroundColor: '#d61935' }}>
@@ -77,53 +55,6 @@ const PoliticsScienceSection = () => {
     </div>
   );
 
-  const ArticleCard = ({ article, isLarge = false }: { article: any; isLarge?: boolean }) => (
-    <div className={`mb-6 cursor-pointer hover:opacity-80 transition-opacity ${isLarge ? 'pb-4' : ''}`}>
-      {article.isPremium && (
-        <div className="mb-2">
-        
-        </div>
-      )}
-      
-      {article.hasImage && isLarge && (
-        <div className="mb-4">
-          <img 
-            src={article.image} 
-            alt={article.title}
-            className="w-full h-48 object-cover"
-          />
-        </div>
-      )}
-      
-      <h3 className={`text-white font-bold leading-tight mb-3 hover:text-gray-300 ${isLarge ? 'text-xl' : 'text-lg'}`}>
-        {article.title}
-      </h3>
-      
-      <div className="flex items-center text-xs mb-3">
-        <span className="text-white px-2 py-1 text-xs font-bold uppercase mr-3" style={{ backgroundColor: '#d61935' }}>
-          {article.category}
-        </span>
-        <span className="text-gray-400">{article.date}</span>
-      </div>
-      
-      {article.excerpt && isLarge && (
-        <p className="text-gray-300 text-sm leading-relaxed">
-          {article.excerpt}
-        </p>
-      )}
-      
-      {article.hasImage && !isLarge && (
-        <div className="mt-3">
-          <img 
-            src={article.image} 
-            alt={article.title}
-            className="w-full h-32 object-cover"
-          />
-        </div>
-      )}
-    </div>
-  );
-
   const SectionHeader = ({ title }: { title: string }) => (
     <div className="flex items-center mb-8">
       <div className="h-1 flex-1" style={{ backgroundColor: '#d61935' }}></div>
@@ -131,21 +62,60 @@ const PoliticsScienceSection = () => {
       <div className="h-1 flex-1" style={{ backgroundColor: '#d61935' }}></div>
     </div>
   );
-
   return (
     <div className="py-8 mx-1 md:mx-8" style={{ backgroundColor: '#0f0f0f' }}>
       <div className="container mx-auto max-w-7xl px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Politics Column */}
           <div className="h-full">
-            <SectionHeader title="Politics" />
+            <SectionHeader title={politicsCategory?.name || "Politics"} />
             <div className="border border-gray-700 p-6">
               {/* Featured Politics Article */}
-              <ArticleCard article={politicsArticles[0]} isLarge={true} />
+              {politicsPosts[0] && (
+                <Link href={`/${politicsPosts[0].slug}`} className="mb-6 cursor-pointer hover:opacity-80 transition-opacity pb-4 block group">
+                  {politicsPosts[0].firebaseImages[0]?.url && (
+                    <div className="mb-4">
+                      <img 
+                        src={politicsPosts[0].firebaseImages[0].url} 
+                        alt={politicsPosts[0].firebaseImages[0].alt || politicsPosts[0].blogContent.title}
+                        className="w-full h-48 object-cover"
+                      />
+                    </div>
+                  )}
+                  
+                  <h3 className="text-white font-bold leading-tight mb-3 group-hover:text-gray-300 text-xl">
+                    {politicsPosts[0].blogContent.title}
+                  </h3>
+                  
+                  <div className="flex items-center text-xs mb-3">
+                    <span className="text-white px-2 py-1 text-xs font-bold uppercase mr-3" style={{ backgroundColor: '#d61935' }}>
+                      {politicsPosts[0].categorySlug.toUpperCase()}
+                    </span>
+                    <span className="text-gray-400">{new Date(politicsPosts[0].createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  </div>
+                  
+                  {politicsPosts[0].blogContent.content && (
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      {getExcerpt(politicsPosts[0].blogContent.content, 150)}
+                    </p>
+                  )}
+                </Link>
+              )}
               
               {/* Other Politics Articles */}
-              {politicsArticles.slice(1).map((article) => (
-                <ArticleCard key={article.id} article={article} />
+              {politicsPosts.slice(1, 3).map((article) => (
+                <Link key={article._id} href={`/${article.slug}`} className="mb-6 cursor-pointer hover:opacity-80 transition-opacity block group">
+                  <h3 className="text-white font-bold leading-tight mb-3 group-hover:text-gray-300 text-lg">
+                    {article.blogContent.title}
+                  </h3>
+                  
+                  <div className="flex items-center text-xs mb-3">
+                    <span className="text-white px-2 py-1 text-xs font-bold uppercase mr-3" style={{ backgroundColor: '#d61935' }}>
+                      {article.categorySlug.toUpperCase()}
+                    </span>
+                    <span className="text-gray-400">{new Date(article.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  </div>
+                </Link>
               ))}
               
               {/* Advertisement */}
@@ -155,24 +125,74 @@ const PoliticsScienceSection = () => {
 
           {/* Science Column */}
           <div className="h-full">
-            <SectionHeader title="Science" />
+            <SectionHeader title={scienceCategory?.name || "Science"} />
             <div className="border border-gray-700 p-6">
-              {/* Featured Science Article */}
-
-               <AdBanner title="Highly Customizable" subtitle="#1 best seller" />
-
-              <ArticleCard article={scienceArticles[0]} isLarge={true} />
-              
               {/* Advertisement */}
-             
-              {scienceArticles.slice(2).map((article) => (
-                <ArticleCard key={article.id} article={article} />
-              ))}
-              {/* Radio Burst Article with Image and Description */}
-              <ArticleCard article={scienceArticles[1]} isLarge={true} />
+              <AdBanner title="Highly Customizable" subtitle="#1 best seller" />
+
+              {/* Featured Science Article */}
+              {sciencePosts[0] && (
+                <Link href={`/${sciencePosts[0].slug}`} className="mb-6 cursor-pointer hover:opacity-80 transition-opacity pb-4 block group">
+                  <h3 className="text-white font-bold leading-tight mb-3 group-hover:text-gray-300 text-xl">
+                    {sciencePosts[0].blogContent.title}
+                  </h3>
+                  
+                  <div className="flex items-center text-xs mb-3">
+                    <span className="text-white px-2 py-1 text-xs font-bold uppercase mr-3" style={{ backgroundColor: '#d61935' }}>
+                      {sciencePosts[0].categorySlug.toUpperCase()}
+                    </span>
+                    <span className="text-gray-400">{new Date(sciencePosts[0].createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  </div>
+                </Link>
+              )}
               
-              {/* Other Science Articles */}
-              
+              {/* Second Science Article */}
+              {sciencePosts[1] && (
+                <Link href={`/${sciencePosts[1].slug}`} className="mb-6 cursor-pointer hover:opacity-80 transition-opacity block group">
+                  <h3 className="text-white font-bold leading-tight mb-3 group-hover:text-gray-300 text-lg">
+                    {sciencePosts[1].blogContent.title}
+                  </h3>
+                  
+                  <div className="flex items-center text-xs mb-3">
+                    <span className="text-white px-2 py-1 text-xs font-bold uppercase mr-3" style={{ backgroundColor: '#d61935' }}>
+                      {sciencePosts[1].categorySlug.toUpperCase()}
+                    </span>
+                    <span className="text-gray-400">{new Date(sciencePosts[1].createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  </div>
+                </Link>
+              )}
+
+              {/* Third Science Article with Image and Description */}
+              {sciencePosts[2] && (
+                <Link href={`/${sciencePosts[2].slug}`} className="cursor-pointer hover:opacity-80 transition-opacity pb-4 block group">
+                  <h3 className="text-white font-bold leading-tight mb-3 group-hover:text-gray-300 text-xl">
+                    {sciencePosts[2].blogContent.title}
+                  </h3>
+                  
+                  <div className="flex items-center text-xs mb-3">
+                    <span className="text-white px-2 py-1 text-xs font-bold uppercase mr-3" style={{ backgroundColor: '#d61935' }}>
+                      {sciencePosts[2].categorySlug.toUpperCase()}
+                    </span>
+                    <span className="text-gray-400">{new Date(sciencePosts[2].createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  </div>
+
+                  {sciencePosts[2].firebaseImages[0]?.url && (
+                    <div className="mt-3">
+                      <img 
+                        src={sciencePosts[2].firebaseImages[0].url} 
+                        alt={sciencePosts[2].firebaseImages[0].alt || sciencePosts[2].blogContent.title}
+                        className="w-full h-48 object-cover"
+                      />
+                    </div>
+                  )}
+
+                  {sciencePosts[2].blogContent.content && (
+                    <p className="text-gray-300 text-sm leading-relaxed mt-3">
+                      {getExcerpt(sciencePosts[2].blogContent.content, 150)}
+                    </p>
+                  )}
+                </Link>
+              )}
             </div>
           </div>
         </div>

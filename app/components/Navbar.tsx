@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface Category {
   _id: string;
@@ -16,16 +17,38 @@ interface NavbarProps {
 }
 
 const Navbar = ({ categories }: NavbarProps) => {
-  const [activeTab, setActiveTab] = useState('Home');
+  const pathname = usePathname();
+  
+  // Calculate initial active tab based on current pathname
+  const getActiveTab = () => {
+    if (pathname === '/' || pathname.startsWith('/page/')) {
+      return 'Home';
+    } else if (pathname.startsWith('/category/')) {
+      const categorySlug = pathname.split('/')[2]?.split('/')[0];
+      const category = categories.find(cat => cat.slug === categorySlug);
+      return category ? category.name : 'Home';
+    }
+    return 'Home';
+  };
+  
+  const [activeTab, setActiveTab] = useState(getActiveTab());
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollbarHidden, setScrollbarHidden] = useState(false);
   const mobileNavRef = useRef<HTMLDivElement>(null);
 
   // Create navigation items: Home + Categories
   const navigationItems = [
-    { name: 'Home', slug: '/' },
-    ...categories.map(cat => ({ name: cat.name, slug: `/${cat.slug}` }))
+    { name: 'ACCUEIL', slug: '/' },
+    ...categories.map(cat => ({ name: cat.name, slug: `/category/${cat.slug}` }))
   ];
+
+  // Update active tab when pathname changes
+  useEffect(() => {
+    const newActiveTab = getActiveTab();
+    if (newActiveTab !== activeTab) {
+      setActiveTab(newActiveTab);
+    }
+  }, [pathname, categories]);
 
   // Handle scroll to hide scrollbar
   useEffect(() => {
@@ -43,7 +66,7 @@ const Navbar = ({ categories }: NavbarProps) => {
   }, [scrollbarHidden]);
 
   return (
-    <nav className="text-white w-full" style={{backgroundColor: '#0f0f0f'}}>
+    <nav className="text-white w-full" style={{backgroundColor: '#0f0f0f'}} suppressHydrationWarning>
       <div className="max-w-7xl mx-auto lg:px-4">
         {/* Top Header with Hamburger Extension */}
         <div className="relative">
@@ -80,12 +103,12 @@ const Navbar = ({ categories }: NavbarProps) => {
               {/* Vertical Separator */}
               <div className="hidden md:block h-6 w-px bg-gray-600"></div>
 
-              {/* My Account */}
+              {/* Mon compte */}
               <div className="hidden md:flex items-center space-x-2">
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-                <span className="text-sm text-white">My account</span>
+                <span className="text-sm text-white">Mon compte</span>
               </div>
             </div>
           </div>
@@ -192,28 +215,28 @@ const Navbar = ({ categories }: NavbarProps) => {
                       className="block text-white text-lg font-bold hover:text-gray-300 transition-colors"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      About DailyEcho
+                      À propos de nous DailyEcho
                     </Link>
                     <Link 
                       href="/contact" 
                       className="block text-white text-lg font-bold hover:text-gray-300 transition-colors"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      Contact Us
+                      Contactez-nous
                     </Link>
                     <Link 
                       href="/privacy" 
                       className="block text-white text-lg font-bold hover:text-gray-300 transition-colors"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      Privacy Policy
+                      Politique de confidentialité
                     </Link>
                     <Link 
                       href="/terms" 
                       className="block text-white text-lg font-bold hover:text-gray-300 transition-colors"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      Terms of Use
+                      Conditions d'utilisation
                     </Link>
                   </div>
 

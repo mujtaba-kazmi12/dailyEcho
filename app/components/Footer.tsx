@@ -1,6 +1,19 @@
-import React from 'react';
+'use client';
 
-const Footer = () => {
+import React from 'react';
+import Link from 'next/link';
+
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+}
+
+interface FooterProps {
+  categories?: Category[];
+}
+
+const Footer = ({ categories = [] }: FooterProps) => {
   return (
     <footer style={{ backgroundColor: '#333333' }} className="text-white">
       {/* Main Footer Content */}
@@ -15,7 +28,7 @@ const Footer = () => {
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8 0L10.472 5.528L16 8L10.472 10.472L8 16L5.528 10.472L0 8L5.528 5.528L8 0Z" fill="#d61935"/>
                 </svg>
-                <span className="ml-2 text-xl font-bold text-white">NewsHub</span>
+                <span className="ml-2 text-xl font-bold text-white">DailyEcho</span>
               </div>
             </div>
             
@@ -24,7 +37,7 @@ const Footer = () => {
               <div>
                 <input
                   type="email"
-                  placeholder="Your email address"
+                  placeholder="Votre adresse e-mail"
                   className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-gray-500"
                 />
               </div>
@@ -32,7 +45,7 @@ const Footer = () => {
                 className="w-full py-3 px-6 text-white font-bold uppercase tracking-wide hover:opacity-90 transition-opacity"
                 style={{ backgroundColor: '#d61935' }}
               >
-                Subscribe
+                S'abonner
               </button>
               
               {/* Privacy Policy Checkbox */}
@@ -43,7 +56,7 @@ const Footer = () => {
                   className="mt-1 w-4 h-4 text-red-600 bg-gray-700 border-gray-600 focus:ring-red-500"
                 />
                 <label htmlFor="privacy" className="text-sm text-gray-300 leading-relaxed">
-                  I've read and accept the Privacy Policy
+                  J'ai lu et j'accepte la politique de confidentialité
                 </label>
               </div>
             </div>
@@ -52,24 +65,18 @@ const Footer = () => {
           {/* Navigation Links - Column 1 */}
           <div className="space-y-4">
             <nav className="space-y-3">
-              <a href="#" className="block text-white font-bold hover:text-gray-300 transition-colors">
-                Home
-              </a>
-              <a href="#" className="block text-white font-bold hover:text-gray-300 transition-colors">
-                World
-              </a>
-              <a href="#" className="block text-white font-bold hover:text-gray-300 transition-colors">
-                Politics
-              </a>
-              <a href="#" className="block text-white font-bold hover:text-gray-300 transition-colors">
-                Business
-              </a>
-              <a href="#" className="block text-white font-bold hover:text-gray-300 transition-colors">
-                Sports
-              </a>
-              <a href="#" className="block text-white  font-bold hover:text-gray-300 transition-colors">
-                Science
-              </a>
+              <Link href="/" className="block text-white font-bold hover:text-gray-300 transition-colors">
+                Accueil
+              </Link>
+              {categories.map((category) => (
+                <Link
+                  key={category._id}
+                  href={`/category/${category.slug}`}
+                  className="block text-white font-bold hover:text-gray-300 transition-colors"
+                >
+                  {category.name}
+                </Link>
+              ))}
             </nav>
           </div>
 
@@ -77,23 +84,23 @@ const Footer = () => {
           <div className="space-y-4">
             <nav className="space-y-3">
               <a href="#" className="block text-white hover:text-gray-300 transition-colors font-bold">
-                About NewsHub
+                À propos de DailyEcho
               </a>
               <a href="#" className="block text-white hover:text-gray-300 transition-colors font-bold">
-                Contact Us
+                Contactez-nous
               </a>
               <a href="#" className="block text-white hover:text-gray-300 transition-colors font-bold">
-                Privacy Policy
+                Politique de confidentialité
               </a>
               <a href="#" className="block text-white hover:text-gray-300 transition-colors font-bold">
-                Terms of Use
+                Conditions d'utilisation
               </a>
               <div className="pt-2">
                 <span 
                   className="inline-block px-3 py-1 text-white text-xs font-bold uppercase tracking-wide"
                   style={{ backgroundColor: '#d61935' }}
                 >
-                  Premium Content
+                  Contenu Premium
                 </span>
               </div>
             </nav>
