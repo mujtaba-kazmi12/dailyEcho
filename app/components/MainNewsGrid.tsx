@@ -84,7 +84,7 @@ const MainNewsGrid = ({ leftPosts, centerPosts, rightPosts, leftCategory, center
 
         {/* Center Section - Europe News (Mobile: First, Desktop: 2 columns wide) */}
         <div className="order-2 md:order-2 md:col-span-2 border-r-0 md:border-r border-gray-700 p-4 md:p-6 space-y-4 md:space-y-6">
-          {centerPosts.map((post, index) => (
+          {centerPosts.slice(0, 3).map((post, index) => (
             <Link 
               key={post._id} 
               href={`/${post.slug}`}
