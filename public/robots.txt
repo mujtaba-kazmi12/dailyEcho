@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+
+# Disallow admin and API routes
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dashboard/
+

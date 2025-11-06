@@ -45,6 +45,9 @@ export async function generateMetadata(): Promise<Metadata> {
     return {
       title: "DailyEcho - Your Source for News",
       description: "Stay informed with the latest news and updates",
+      alternates: {
+        canonical: 'https://dailyecho.fr/',
+      },
     };
   }
 
@@ -53,6 +56,9 @@ export async function generateMetadata(): Promise<Metadata> {
     description: seoData.metaDescription || "Stay informed with the latest news and updates",
     keywords: seoData.metaKeywords || "",
     robots: seoData.robotsDirective || "index, follow",
+    alternates: {
+      canonical: 'https://dailyecho.fr/',
+    },
     openGraph: {
       title: seoData.ogTitle || seoData.metaTitle || "DailyEcho",
       description: seoData.ogDescription || seoData.metaDescription || "Stay informed with the latest news",
@@ -76,6 +82,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="canonical" href="https://dailyecho.fr/" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

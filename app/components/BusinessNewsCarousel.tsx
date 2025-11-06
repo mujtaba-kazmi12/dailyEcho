@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Post {
   _id: string;
@@ -49,11 +50,13 @@ const BusinessNewsCarousel = ({ posts, category }: BusinessNewsCarouselProps) =>
             {posts.map((article) => (
               <Link key={article._id} href={`/${article.slug}`} className="flex cursor-pointer hover:opacity-80 transition-opacity group">
                 {/* Image */}
-                <div className="flex-shrink-0 w-24 h-20 relative mr-4">
-                  <img 
+                <div className="relative flex-shrink-0 w-24 h-20 mr-4">
+                  <Image 
                     src={article.firebaseImages[0]?.url || "/images/pci1.jpg"} 
                     alt={article.firebaseImages[0]?.alt || article.blogContent.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="96px"
+                    className="object-cover"
                   />
                 </div>
                 

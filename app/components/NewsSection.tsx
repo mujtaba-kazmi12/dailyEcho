@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Post {
   _id: string;
@@ -68,11 +69,14 @@ const NewsSection = ({ posts, breakingNews }: NewsSectionProps) => {
             <div className="relative">
               {/* Featured Article Image */}
               <Link href={`/${posts[0]?.slug || '#'}`} className="block">
-                <div className="relative h-96 bg-gray-700  overflow-hidden">
-                  <img 
+                <div className="relative h-96 bg-gray-700 overflow-hidden">
+                  <Image 
                     src={posts[0]?.firebaseImages[0]?.url || "/images/pci1.jpg"} 
                     alt={posts[0]?.firebaseImages[0]?.alt || "Featured News"} 
-                    className="w-full h-full object-cover"
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover"
                   />
                   
                   
@@ -112,11 +116,13 @@ const NewsSection = ({ posts, breakingNews }: NewsSectionProps) => {
               <div className="space-y-6">
                 {posts.slice(1, 4).map((post, index) => (
                   <Link key={post._id} href={`/${post.slug}`} className="flex space-x-4 group">
-                    <div className="flex-shrink-0 w-20 h-20 bg-gray-700 rounded overflow-hidden">
-                      <img 
+                    <div className="relative flex-shrink-0 w-20 h-20 bg-gray-700 rounded overflow-hidden">
+                      <Image 
                         src={post.firebaseImages[0]?.url || "/images/pci1.jpg"} 
                         alt={post.firebaseImages[0]?.alt || "News"} 
-                        className="w-full h-full object-cover"
+                        fill
+                        sizes="80px"
+                        className="object-cover"
                       />
                     </div>
                     <div className="flex-1">

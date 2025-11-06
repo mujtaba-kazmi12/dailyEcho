@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Post {
   _id: string;
@@ -58,11 +59,13 @@ const CategoryNews = ({ posts, pagination, currentPage, categorySlug }: Category
 
   const NewsCard = ({ article }: { article: Post }) => (
     <Link href={`/${article.slug}`} className="cursor-pointer hover:opacity-80 transition-opacity group block">
-      <div className="relative mb-4">
-        <img 
+      <div className="relative mb-4 w-full h-48">
+        <Image 
           src={article.firebaseImages[0]?.url || "/images/pci1.jpg"} 
           alt={article.firebaseImages[0]?.alt || article.blogContent.title}
-          className="w-full h-48 object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover"
         />
       </div>
       

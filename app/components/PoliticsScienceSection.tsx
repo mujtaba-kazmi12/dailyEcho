@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Post {
   _id: string;
@@ -74,11 +75,14 @@ const PoliticsScienceSection = ({ politicsPosts, sciencePosts, politicsCategory,
               {politicsPosts[0] && (
                 <Link href={`/${politicsPosts[0].slug}`} className="mb-6 cursor-pointer hover:opacity-80 transition-opacity pb-4 block group">
                   {politicsPosts[0].firebaseImages[0]?.url && (
-                    <div className="mb-4">
-                      <img 
+                    <div className="relative mb-4 w-full h-48">
+                      <Image 
                         src={politicsPosts[0].firebaseImages[0].url} 
                         alt={politicsPosts[0].firebaseImages[0].alt || politicsPosts[0].blogContent.title}
-                        className="w-full h-48 object-cover"
+                        fill
+                        priority
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                        className="object-cover"
                       />
                     </div>
                   )}
@@ -177,11 +181,13 @@ const PoliticsScienceSection = ({ politicsPosts, sciencePosts, politicsCategory,
                   </div>
 
                   {sciencePosts[2].firebaseImages[0]?.url && (
-                    <div className="mt-3">
-                      <img 
+                    <div className="relative mt-3 w-full h-48">
+                      <Image 
                         src={sciencePosts[2].firebaseImages[0].url} 
                         alt={sciencePosts[2].firebaseImages[0].alt || sciencePosts[2].blogContent.title}
-                        className="w-full h-48 object-cover"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                        className="object-cover"
                       />
                     </div>
                   )}

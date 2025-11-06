@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Post {
   _id: string;
@@ -96,9 +97,13 @@ const MainNewsGrid = ({ leftPosts, centerPosts, rightPosts, leftCategory, center
                     <span className="text-white px-2 py-1 text-xs font-bold uppercase mr-2" style={{ backgroundColor: '#d61935' }}>{post.categorySlug.toUpperCase()}</span>
                     <span>{new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                   </div>
-                  <img 
+                  <Image 
                     src={post.firebaseImages[0]?.url || "/images/pci1.jpg"} 
                     alt={post.firebaseImages[0]?.alt || post.blogContent.title} 
+                    width={800}
+                    height={index === 0 ? 512 : 400}
+                    priority={index === 0}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
                     className="w-full h-48 md:h-64 object-cover mb-2 md:mb-4"
                   />
                   <p className="text-gray-300 leading-relaxed text-sm md:text-base">
@@ -135,11 +140,15 @@ const MainNewsGrid = ({ leftPosts, centerPosts, rightPosts, leftCategory, center
         <div className="order-4 md:order-1 border-r-0 md:border-r border-gray-700 p-4 space-y-4">
           {leftPosts.slice(0, 3).map((post, index) => (
             <Link key={post._id} href={`/${post.slug}`} className="border-b border-gray-700 pb-4 block group">
-              <img 
-                src={post.firebaseImages[0]?.url || "/images/pci1.jpg"} 
-                alt={post.firebaseImages[0]?.alt || post.blogContent.title} 
-                className="w-full h-24 object-cover mb-2"
-              />
+              <div className="relative w-full h-24">
+                <Image 
+                  src={post.firebaseImages[0]?.url || "/images/pci1.jpg"} 
+                  alt={post.firebaseImages[0]?.alt || post.blogContent.title} 
+                  fill
+                  sizes="(max-width: 768px) 100vw, 300px"
+                  className="object-cover mb-2"
+                />
+              </div>
               <h3 className="text-sm font-bold mb-2 group-hover:text-gray-300">{post.blogContent.title}</h3>
               <div className="flex items-center text-xs text-gray-400">
                 <span className="text-white px-2 py-1 text-xs font-bold uppercase mr-2" style={{ backgroundColor: '#d61935' }}>{post.categorySlug.toUpperCase()}</span>
@@ -214,11 +223,15 @@ const MainNewsGrid = ({ leftPosts, centerPosts, rightPosts, leftCategory, center
           {/* Articles with Images */}
           {rightPosts.slice(3, 6).map((post, index) => (
             <Link key={post._id} href={`/${post.slug}`} className={index < 2 ? "border-b border-gray-700 pb-4 block group" : "block group"}>
-              <img 
-                src={post.firebaseImages[0]?.url || "/images/pci1.jpg"} 
-                alt={post.firebaseImages[0]?.alt || post.blogContent.title} 
-                className="w-full h-24 object-cover mb-2"
-              />
+              <div className="relative w-full h-24">
+                <Image 
+                  src={post.firebaseImages[0]?.url || "/images/pci1.jpg"} 
+                  alt={post.firebaseImages[0]?.alt || post.blogContent.title} 
+                  fill
+                  sizes="(max-width: 768px) 100vw, 300px"
+                  className="object-cover mb-2"
+                />
+              </div>
               <h3 className="text-sm font-bold mb-2 group-hover:text-gray-300">{post.blogContent.title}</h3>
               <div className="flex items-center text-xs text-gray-400">
                 <span className="text-white px-2 py-1 text-xs font-bold uppercase mr-2" style={{ backgroundColor: '#d61935' }}>{post.categorySlug.toUpperCase()}</span>

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Post {
   _id: string;
@@ -45,14 +46,17 @@ const PostDetail = ({ post, relatedPosts }: PostDetailProps) => {
             </h1>
 
             {/* Featured Image */}
-            <div className="mb-6">
-              <img 
+            <div className="relative mb-6 w-full" style={{ height: '500px' }}>
+              <Image 
                 src={post.firebaseImages[0]?.url || "/images/pci1.jpg"} 
                 alt={post.firebaseImages[0]?.alt || post.blogContent.title}
-                className="w-full h-auto object-cover"
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 900px"
+                className="object-cover"
               />
               {post.firebaseImages[0]?.title && (
-                <p className="text-gray-400 text-sm mt-2 italic">{post.firebaseImages[0].title}</p>
+                <p className="text-gray-400 text-sm mt-2 italic absolute bottom-0 left-0 bg-black/50 px-2 py-1">{post.firebaseImages[0].title}</p>
               )}
             </div>
 
@@ -125,11 +129,13 @@ const PostDetail = ({ post, relatedPosts }: PostDetailProps) => {
                     href={`/${article.slug}`}
                     className="block group cursor-pointer"
                   >
-                    <div className="mb-3">
-                      <img 
+                    <div className="relative mb-3 w-full h-48">
+                      <Image 
                         src={article.firebaseImages[0]?.url || "/images/pci1.jpg"} 
                         alt={article.firebaseImages[0]?.alt || article.blogContent.title}
-                        className="w-full h-48 object-cover"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 400px"
+                        className="object-cover"
                       />
                     </div>
                     <div className="flex items-center space-x-2 mb-2">
