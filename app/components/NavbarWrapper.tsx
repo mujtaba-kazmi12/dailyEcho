@@ -33,6 +33,9 @@ async function getCategories(): Promise<Category[]> {
   }
 }
 
+// Add unstable_cache for even better performance
+export const revalidate = 300; // Revalidate every 5 minutes
+
 export default async function NavbarWrapper() {
   const categories = await getCategories();
   

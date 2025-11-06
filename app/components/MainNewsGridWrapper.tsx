@@ -51,9 +51,9 @@ async function getGridData() {
 
     // Fetch posts for each category in parallel
     const [leftPostsRes, centerPostsRes, rightPostsRes] = await Promise.all([
-      fetch(`${baseUrl}/api/posts?categorySlug=${leftCategory?.slug}&page=1&limit=6`, { cache: 'no-store' }),
-      fetch(`${baseUrl}/api/posts?categorySlug=${centerCategory?.slug}&page=1&limit=4`, { cache: 'no-store' }),
-      fetch(`${baseUrl}/api/posts?categorySlug=${rightCategory?.slug}&page=1&limit=6`, { cache: 'no-store' })
+      fetch(`${baseUrl}/api/posts?categorySlug=${leftCategory?.slug}&page=1&limit=6`, { next: { revalidate: 60 } }),
+      fetch(`${baseUrl}/api/posts?categorySlug=${centerCategory?.slug}&page=1&limit=4`, { next: { revalidate: 60 } }),
+      fetch(`${baseUrl}/api/posts?categorySlug=${rightCategory?.slug}&page=1&limit=6`, { next: { revalidate: 60 } })
     ]);
 
     const [leftPostsData, centerPostsData, rightPostsData] = await Promise.all([

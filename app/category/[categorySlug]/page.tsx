@@ -1,6 +1,8 @@
+import { Suspense } from 'react';
 import NavbarWrapper from '../../components/NavbarWrapper';
 import CategoryNewsWrapper from '../../components/CategoryNewsWrapper';
 import Footer from '../../components/FooterWrapper';
+import LoadingSpinner from '../../components/LoadingSpinner';
 import { Metadata } from 'next';
 
 interface CategorySeoData {
@@ -13,7 +15,9 @@ interface CategorySeoData {
 async function getCategorySeo(categorySlug: string): Promise<CategorySeoData | null> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_APP_BASE_URL || process.env.APP_BASE_URL || 'http://localhost:3000';
-    const response = await fetch(`${baseUrl}/api/seo/category?categorySlug=${categorySlug}`, { cache: 'no-store' });
+    const response = await fetch(`${baseUrl}/api/seo/category?categorySlug=${categorySlug}`, { 
+      next: { revalidate: 300 } // Cache for 5 minutes
+    });
     const data = await response.json();
     return data.success ? data.data : null;
   } catch (error) {
@@ -52,7 +56,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#0f0f0f' }} suppressHydrationWarning>
       <NavbarWrapper />
-      <CategoryNewsWrapper categorySlug={categorySlug} currentPage={1} />
+      <Suspense fallback={<LoadingSpinner />}>
+        <CategoryNewsWrapper categorySlug={categorySlug} currentPage={1} />
+      </Suspense>
       <Footer />
     </div>
   );

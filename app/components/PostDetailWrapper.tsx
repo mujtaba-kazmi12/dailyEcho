@@ -26,7 +26,9 @@ async function getPostDetail(slug: string) {
   try {
     const postRes = await fetch(
       `${baseUrl}/api/posts?slug=${slug}`,
-      { cache: 'no-store' }
+      { 
+        next: { revalidate: 300 } // Cache for 5 minutes - posts don't change often
+      }
     );
     const postData = await postRes.json();
 
@@ -35,7 +37,9 @@ async function getPostDetail(slug: string) {
     if (postData.success && postData.post) {
       const relatedRes = await fetch(
         `${baseUrl}/api/posts?categorySlug=${postData.post.categorySlug}&page=1&limit=4`,
-        { cache: 'no-store' }
+        { 
+          next: { revalidate: 60 } // Cache for 1 minute
+        }
       );
       const relatedData = await relatedRes.json();
       relatedPosts = relatedData.success ? relatedData.posts.filter((p: Post) => p.slug !== slug).slice(0, 3) : [];

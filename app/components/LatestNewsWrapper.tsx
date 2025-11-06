@@ -29,7 +29,9 @@ async function getLatestNews(page: number = 1) {
   try {
     const postsRes = await fetch(
       `${baseUrl}/api/posts?page=${page}&limit=12`,
-      { cache: 'no-store' }
+      { 
+        next: { revalidate: 60 } // Cache for 1 minute
+      }
     );
     const postsData = await postsRes.json();
 

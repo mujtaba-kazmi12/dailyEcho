@@ -77,9 +77,9 @@ const Navbar = ({ categories }: NavbarProps) => {
               <div className="flex items-center space-x-2">
                 <div className="w-6 h-6 flex items-center justify-center">
                   {/* Three horizontal lines icon */}
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
-                  </svg>
+                   <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 0L10.472 5.528L16 8L10.472 10.472L8 16L5.528 10.472L0 8L5.528 5.528L8 0Z" fill="#d61935"/>
+                </svg>
                 </div>
                 <span className="text-xl font-bold text-white">DailyEcho</span>
               </div>

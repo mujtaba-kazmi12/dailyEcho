@@ -145,9 +145,9 @@ const NewsSection = ({ posts, breakingNews }: NewsSectionProps) => {
             <span className="py-3 px-4 text-md font-bold uppercase flex-shrink-0" style={{ backgroundColor: '#d61935' }}>
               Dernière minute
             </span>
-            <div className="flex-1 py-3 px-4" style={{ backgroundColor: '#333333' }}>
+            <div className="flex-1 py-3 px-4 overflow-hidden" style={{ backgroundColor: '#333333' }}>
               <div className={`transition-opacity duration-300 ${fadeClass}`}>
-                <span className="text-sm font-bold">
+                <span className="text-sm font-bold line-clamp-1 block">
                   {breakingNews[currentNewsIndex]?.blogContent?.title || "No breaking news available"}
                 </span>
               </div>
@@ -159,9 +159,9 @@ const NewsSection = ({ posts, breakingNews }: NewsSectionProps) => {
             <div className="py-3 px-4 text-md font-bold uppercase" style={{ backgroundColor: '#d61935' }}>
               Dernière minute
             </div>
-            <div className="py-3 px-4" style={{ backgroundColor: '#333333' }}>
+            <div className="py-3 px-4 overflow-hidden" style={{ backgroundColor: '#333333' }}>
               <div className={`transition-opacity duration-300 ${fadeClass}`}>
-                <span className="text-sm font-bold">
+                <span className="text-sm font-bold line-clamp-2 block">
                   {breakingNews[currentNewsIndex]?.blogContent?.title || "No breaking news available"}
                 </span>
               </div>

@@ -25,13 +25,13 @@ const Footer = ({ categories = [] }: FooterProps) => {
             {/* Logo */}
             <div className="flex items-center space-x-2">
               <div className="flex items-center">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8 0L10.472 5.528L16 8L10.472 10.472L8 16L5.528 10.472L0 8L5.528 5.528L8 0Z" fill="#d61935"/>
                 </svg>
-                <span className="ml-2 text-xl font-bold text-white">DailyEcho</span>
+               <Link href={'/'} className="ml-2 text-xl font-bold text-white">DailyEcho</Link> 
               </div>
             </div>
-            
+             
             {/* Newsletter Form */}
             <div className="space-y-4">
               <div>
@@ -83,18 +83,18 @@ const Footer = ({ categories = [] }: FooterProps) => {
           {/* Navigation Links - Column 2 */}
           <div className="space-y-4">
             <nav className="space-y-3">
-              <a href="#" className="block text-white hover:text-gray-300 transition-colors font-bold">
+              <Link href="/about" className="block text-white hover:text-gray-300 transition-colors font-bold">
                 À propos de DailyEcho
-              </a>
-              <a href="#" className="block text-white hover:text-gray-300 transition-colors font-bold">
+              </Link>
+              <Link href="/contact" className="block text-white hover:text-gray-300 transition-colors font-bold">
                 Contactez-nous
-              </a>
-              <a href="#" className="block text-white hover:text-gray-300 transition-colors font-bold">
+              </Link>
+              <Link href="/privacy" className="block text-white hover:text-gray-300 transition-colors font-bold">
                 Politique de confidentialité
-              </a>
-              <a href="#" className="block text-white hover:text-gray-300 transition-colors font-bold">
+              </Link>
+              <Link href="/terms" className="block text-white hover:text-gray-300 transition-colors font-bold">
                 Conditions d'utilisation
-              </a>
+              </Link>
               <div className="pt-2">
                 <span 
                   className="inline-block px-3 py-1 text-white text-xs font-bold uppercase tracking-wide"
@@ -149,7 +149,7 @@ const Footer = ({ categories = [] }: FooterProps) => {
       <div className="border-t border-gray-700">
         <div className="container mx-auto max-w-7xl px-6 py-4">
           <p className="text-sm text-gray-400">
-            © Newspaper WordPress Theme by TagDiv
+           DailyEcho - Votre Dose Quotidienne d'Actualités, Blogs et Histoires Qui Comptent
           </p>
         </div>
       </div>

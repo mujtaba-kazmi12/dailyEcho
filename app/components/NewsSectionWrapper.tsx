@@ -32,7 +32,7 @@ async function getNewsData() {
   try {
     // Fetch categories
     const categoriesRes = await fetch(`${baseUrl}/api/categories`, {
-      cache: 'no-store'
+      next: { revalidate: 300 } // Cache for 5 minutes
     });
     const categoriesData = await categoriesRes.json();
 
@@ -47,11 +47,11 @@ async function getNewsData() {
     const [postsRes, breakingNewsRes] = await Promise.all([
       fetch(
         `${baseUrl}/api/posts?categorySlug=${firstCategory.slug}&page=1&limit=4`,
-        { cache: 'no-store' }
+        { next: { revalidate: 60 } } // Cache for 1 minute
       ),
       fetch(
         `${baseUrl}/api/posts?page=1&limit=5`,
-        { cache: 'no-store' }
+        { next: { revalidate: 60 } } // Cache for 1 minute
       )
     ]);
 

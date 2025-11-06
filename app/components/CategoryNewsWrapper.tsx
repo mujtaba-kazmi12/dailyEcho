@@ -30,7 +30,9 @@ async function getCategoryNews(categorySlug: string, page: number = 1) {
   try {
     const postsRes = await fetch(
       `${baseUrl}/api/posts?categorySlug=${categorySlug}&page=${page}&limit=12`,
-      { cache: 'no-store' }
+      { 
+        next: { revalidate: 60 } // Cache for 1 minute - fresh content with better performance
+      }
     );
     const postsData = await postsRes.json();
 
