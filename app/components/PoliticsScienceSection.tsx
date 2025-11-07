@@ -50,7 +50,7 @@ const PoliticsScienceSection = ({ politicsPosts, sciencePosts, politicsCategory,
           <p className="text-white text-sm">{subtitle}</p>
         </div>
         <button className="bg-white text-black px-4 py-2 rounded font-bold text-sm hover:bg-gray-100 transition-colors">
-          GET NOW
+          Obtenez maintenant
         </button>
       </div>
     </div>
@@ -123,7 +123,7 @@ const PoliticsScienceSection = ({ politicsPosts, sciencePosts, politicsCategory,
               ))}
               
               {/* Advertisement */}
-              <AdBanner title="Beautiful Designs" subtitle="#1 best seller" />
+              <AdBanner title="Ajoute une bannière" subtitle="Meilleure vente n°1" />
             </div>
           </div>
 
@@ -132,7 +132,7 @@ const PoliticsScienceSection = ({ politicsPosts, sciencePosts, politicsCategory,
             <SectionHeader title={scienceCategory?.name || "Science"} />
             <div className="border border-gray-700 p-6">
               {/* Advertisement */}
-              <AdBanner title="Highly Customizable" subtitle="#1 best seller" />
+              <AdBanner title="Ajoute une bannière" subtitle="Meilleure vente n°1" />
 
               {/* Featured Science Article */}
               {sciencePosts[0] && (

@@ -160,9 +160,9 @@ const MainNewsGrid = ({ leftPosts, centerPosts, rightPosts, leftCategory, center
           {/* Advertisement */}
           <div className="p-4 text-center" style={{ backgroundColor: '#d61935' }}>
             <div className="text-white">
-              <h4 className="font-bold text-lg mb-2">NewsPaper Theme</h4>
-              <p className="text-sm mb-3">$1 best seller</p>
-              <button className="bg-white px-4 py-2 text-sm font-bold" style={{ color: '#d61935' }}>GET NOW</button>
+              <h4 className="font-bold text-lg mb-2">Ajoute une bannière</h4>
+              <p className="text-sm mb-3">Meilleure vente n°1</p>
+              <button className="bg-white px-4 py-2 text-sm font-bold" style={{ color: '#d61935' }}>Obtenez maintenant</button>
             </div>
           </div>
 
@@ -203,9 +203,9 @@ const MainNewsGrid = ({ leftPosts, centerPosts, rightPosts, leftCategory, center
           {/* Advertisement Banner */}
           <div className="p-4 text-center mb-4" style={{ backgroundColor: '#d61935' }}>
             <div className="text-white">
-              <h4 className="font-bold text-lg mb-2">Quality Design</h4>
-              <p className="text-sm mb-3">$1 best seller</p>
-              <button className="bg-white px-4 py-2 text-sm font-bold" style={{ color: '#d61935' }}>GET NOW</button>
+              <h4 className="font-bold text-lg mb-2">Ajoute une bannière</h4>
+              <p className="text-sm mb-3">Meilleure vente n°1</p>
+              <button className="bg-white px-4 py-2 text-sm font-bold" style={{ color: '#d61935' }}>Obtenez maintenant</button>
             </div>
           </div>
 
