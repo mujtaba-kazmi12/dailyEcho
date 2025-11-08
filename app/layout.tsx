@@ -48,6 +48,9 @@ export async function generateMetadata(): Promise<Metadata> {
       alternates: {
         canonical: 'https://dailyecho.fr/',
       },
+      icons: {
+        icon: '/favicon.ico',
+      },
     };
   }
 
@@ -58,6 +61,9 @@ export async function generateMetadata(): Promise<Metadata> {
     robots: seoData.robotsDirective || "index, follow",
     alternates: {
       canonical: 'https://dailyecho.fr/',
+    },
+    icons: {
+      icon: '/favicon.ico',
     },
     openGraph: {
       title: seoData.ogTitle || seoData.metaTitle || "DailyEcho",
@@ -84,6 +90,18 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="canonical" href="https://dailyecho.fr/" />
+        {/* Google Analytics */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-5QRHW8E7SJ"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-5QRHW8E7SJ');
+            `,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
