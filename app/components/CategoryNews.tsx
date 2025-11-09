@@ -90,11 +90,33 @@ const CategoryNews = ({ posts, pagination, currentPage, categorySlug }: Category
     const prevPage = currentPage > 1 ? (currentPage === 2 ? `/category/${categorySlug}` : `/category/${categorySlug}/page${currentPage - 1}`) : `/category/${categorySlug}`;
     const nextPage = currentPage < totalPages ? `/category/${categorySlug}/page${currentPage + 1}` : `/category/${categorySlug}/page${totalPages}`;
 
-    // Generate page numbers to display
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(i);
-    }
+    // Generate smart page numbers with sliding window
+    const renderPageNumbers = () => {
+      const pages = [];
+      
+      if (totalPages <= 5) {
+        // Show all pages if 5 or less
+        for (let i = 1; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        // Sliding window pagination
+        if (currentPage <= 2) {
+          // At beginning: 1, 2, 3, ..., lastPage
+          pages.push(1, 2, 3, '...', totalPages);
+        } else if (currentPage >= totalPages - 1) {
+          // At end: 1, ..., n-2, n-1, n
+          pages.push(1, '...', totalPages - 2, totalPages - 1, totalPages);
+        } else {
+          // In middle: current-1, current, current+1, ..., lastPage
+          pages.push(currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+        }
+      }
+      
+      return pages;
+    };
+
+    const pageNumbers = renderPageNumbers();
 
     return (
       <div className="flex justify-center items-center mt-12 space-x-2">
@@ -109,16 +131,29 @@ const CategoryNews = ({ posts, pagination, currentPage, categorySlug }: Category
         </Link>
         
         {/* Page Numbers */}
-        {pageNumbers.map((pageNum) => (
-          <Link 
-            key={pageNum}
-            href={pageNum === 1 ? `/category/${categorySlug}` : `/category/${categorySlug}/page${pageNum}`} 
-            className="w-10 h-10 flex items-center justify-center font-bold transition-colors hover:bg-gray-800"
-            style={currentPage === pageNum ? { backgroundColor: '#d61935', color: 'white' } : { color: '#9ca3af' }}
-          >
-            {pageNum}
-          </Link>
-        ))}
+        {pageNumbers.map((pageNum, index) => {
+          if (pageNum === '...') {
+            return (
+              <span 
+                key={`dots-${index}`}
+                className="w-10 h-10 flex items-center justify-center text-gray-400"
+              >
+                ...
+              </span>
+            );
+          }
+          
+          return (
+            <Link 
+              key={pageNum}
+              href={pageNum === 1 ? `/category/${categorySlug}` : `/category/${categorySlug}/page${pageNum}`} 
+              className="w-10 h-10 flex items-center justify-center font-bold transition-colors hover:bg-gray-800"
+              style={currentPage === pageNum ? { backgroundColor: '#d61935', color: 'white' } : { color: '#9ca3af' }}
+            >
+              {pageNum}
+            </Link>
+          );
+        })}
         
         {/* Next Arrow */}
         <Link 

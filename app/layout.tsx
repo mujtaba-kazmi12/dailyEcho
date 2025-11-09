@@ -49,7 +49,14 @@ export async function generateMetadata(): Promise<Metadata> {
         canonical: 'https://dailyecho.fr/',
       },
       icons: {
-        icon: '/favicon.ico',
+        icon: [
+          { url: '/favicon.ico', sizes: 'any' },
+          { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+          { url: '/favicon.ico', sizes: '16x16', type: 'image/x-icon' },
+        ],
+        apple: [
+          { url: '/favicon.ico', sizes: '180x180', type: 'image/x-icon' },
+        ],
       },
     };
   }
@@ -63,7 +70,14 @@ export async function generateMetadata(): Promise<Metadata> {
       canonical: 'https://dailyecho.fr/',
     },
     icons: {
-      icon: '/favicon.ico',
+      icon: [
+        { url: '/favicon.ico', sizes: 'any' },
+        { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+        { url: '/favicon.ico', sizes: '16x16', type: 'image/x-icon' },
+      ],
+      apple: [
+        { url: '/favicon.ico', sizes: '180x180', type: 'image/x-icon' },
+      ],
     },
     openGraph: {
       title: seoData.ogTitle || seoData.metaTitle || "DailyEcho",
