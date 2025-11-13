@@ -34,6 +34,22 @@ interface PostDetailProps {
 }
 
 const PostDetail = ({ post, relatedPosts }: PostDetailProps) => {
+  // Helper function to split content in half for inserting middle image
+  const splitContent = (htmlContent: string) => {
+    if (!htmlContent) return { firstHalf: '', secondHalf: '' };
+    
+    // Split content roughly in the middle by paragraphs
+    const paragraphs = htmlContent.split('</p>');
+    const midPoint = Math.floor(paragraphs.length / 2);
+    
+    const firstHalf = paragraphs.slice(0, midPoint).join('</p>') + (midPoint > 0 ? '</p>' : '');
+    const secondHalf = paragraphs.slice(midPoint).join('</p>');
+    
+    return { firstHalf, secondHalf };
+  };
+
+  const { firstHalf, secondHalf } = splitContent(post.blogContent.content || '');
+
   return (
     <div className="py-12" style={{ backgroundColor: '#0f0f0f' }}>
       <div className="container mx-auto max-w-7xl px-4">
@@ -53,7 +69,8 @@ const PostDetail = ({ post, relatedPosts }: PostDetailProps) => {
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 900px"
-                className="object-cover"
+                className="object-contain"
+                style={{ backgroundColor: '#1f1f1f' }}
               />
               {post.firebaseImages[0]?.title && (
                 <p className="text-gray-400 text-sm mt-2 italic absolute bottom-0 left-0 bg-black/50 px-2 py-1">{post.firebaseImages[0].title}</p>
@@ -84,13 +101,39 @@ const PostDetail = ({ post, relatedPosts }: PostDetailProps) => {
               </button>
             </div>
 
-            {/* Post Content - Render HTML */}
+            {/* Post Content - First Half */}
             <div 
               className="prose prose-invert max-w-none"
               style={{
                 color: '#d1d5db'
               }}
-              dangerouslySetInnerHTML={{ __html: post.blogContent.content || '' }}
+              dangerouslySetInnerHTML={{ __html: firstHalf }}
+            />
+
+            {/* Middle Image (Second Image from firebaseImages) */}
+            {post.firebaseImages[1] && (
+              <div className="relative my-8 w-full" style={{ height: '400px' }}>
+                <Image 
+                  src={post.firebaseImages[1].url} 
+                  alt={post.firebaseImages[1].alt || post.blogContent.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 900px"
+                  className="object-contain"
+                  style={{ backgroundColor: '#1f1f1f' }}
+                />
+                {post.firebaseImages[1].title && (
+                  <p className="text-gray-400 text-sm mt-2 italic absolute bottom-0 left-0 bg-black/50 px-2 py-1">{post.firebaseImages[1].title}</p>
+                )}
+              </div>
+            )}
+
+            {/* Post Content - Second Half */}
+            <div 
+              className="prose prose-invert max-w-none"
+              style={{
+                color: '#d1d5db'
+              }}
+              dangerouslySetInnerHTML={{ __html: secondHalf }}
             />
 
             {/* FAQs Section */}
