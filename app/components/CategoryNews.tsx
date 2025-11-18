@@ -87,8 +87,8 @@ const CategoryNews = ({ posts, pagination, currentPage, categorySlug }: Category
   );
 
   const Pagination = () => {
-    const prevPage = currentPage > 1 ? (currentPage === 2 ? `/category/${categorySlug}` : `/category/${categorySlug}/page${currentPage - 1}`) : `/category/${categorySlug}`;
-    const nextPage = currentPage < totalPages ? `/category/${categorySlug}/page${currentPage + 1}` : `/category/${categorySlug}/page${totalPages}`;
+    const prevPage = currentPage > 1 ? (currentPage === 2 ? `/category/${categorySlug}` : `/category/${categorySlug}/page/${currentPage - 1}`) : `/category/${categorySlug}`;
+    const nextPage = currentPage < totalPages ? `/category/${categorySlug}/page/${currentPage + 1}` : `/category/${categorySlug}/page/${totalPages}`;
 
     // Generate smart page numbers with sliding window
     const renderPageNumbers = () => {
@@ -146,7 +146,7 @@ const CategoryNews = ({ posts, pagination, currentPage, categorySlug }: Category
           return (
             <Link 
               key={pageNum}
-              href={pageNum === 1 ? `/category/${categorySlug}` : `/category/${categorySlug}/page${pageNum}`} 
+              href={pageNum === 1 ? `/category/${categorySlug}` : `/category/${categorySlug}/page/${pageNum}`} 
               className="w-10 h-10 flex items-center justify-center font-bold transition-colors hover:bg-gray-800"
               style={currentPage === pageNum ? { backgroundColor: '#d61935', color: 'white' } : { color: '#9ca3af' }}
             >
